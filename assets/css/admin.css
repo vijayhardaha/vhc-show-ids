@@ -1,11 +1,14 @@
-table tbody .row-actions .vh-wp-show-id {
-    position: relative;
-    cursor: pointer;
+.row-actions .vh-wp-show-id {
     color: #777777;
 }
 
-table tbody .row-actions .vh-wp-show-id::before,
-table tbody .row-actions .vh-wp-show-id::after {
+.row-actions .vh-wp-show-id.vh-has-copy {
+    position: relative;
+    cursor: pointer;
+}
+
+.row-actions .vh-wp-show-id.vh-has-copy::before,
+.row-actions .vh-wp-show-id.vh-has-copy::after {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
@@ -25,7 +28,7 @@ table tbody .row-actions .vh-wp-show-id::after {
     will-change: transform;
 }
 
-table tbody .row-actions .vh-wp-show-id::before {
+.row-actions .vh-wp-show-id.vh-has-copy::before {
     top: 100%;
     bottom: auto;
     left: 50%;
@@ -39,7 +42,7 @@ table tbody .row-actions .vh-wp-show-id::before {
     background-size: 100% auto !important;
 }
 
-table tbody .row-actions .vh-wp-show-id::after {
+.row-actions .vh-wp-show-id.vh-has-copy::after {
     top: 100%;
     left: 50%;
     max-width: 200px;
@@ -69,8 +72,8 @@ table tbody .row-actions .vh-wp-show-id::after {
     will-change: transform;
 }
 
-table tbody .row-actions .vh-wp-show-id:hover::before,
-table tbody .row-actions .vh-wp-show-id:hover::after {
+.row-actions .vh-wp-show-id.vh-has-copy:hover::before,
+.row-actions .vh-wp-show-id.vh-has-copy:hover::after {
     opacity: 1;
     -webkit-transform: translate3d(-50%, 0, 0);
     transform: translate3d(-50%, 0, 0);

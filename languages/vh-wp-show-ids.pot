@@ -39,15 +39,15 @@ msgid "The minimum PHP version required for this plugin is %1$s. You are running
 msgstr ""
 
 #. translators: %s Object ID
-#: ../includes/class-vh-wp-show-ids.php:463
+#: ../includes/class-vh-wp-show-ids.php:500
 msgid "ID: %s"
 msgstr ""
 
 #. translators: 1: Object ID. 2: Object ID
-#: ../includes/class-vh-wp-show-ids.php:471
+#: ../includes/class-vh-wp-show-ids.php:512
 msgid "Click to copy"
 msgstr ""
 
-#: ../includes/class-vh-wp-show-ids.php:471
+#: ../includes/class-vh-wp-show-ids.php:512
 msgid "Copied!"
 msgstr ""

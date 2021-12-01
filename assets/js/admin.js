@@ -9,7 +9,7 @@
 /* global ClipboardJS */
 
 jQuery( function ( $ ) {
-  var VHClipboard = new ClipboardJS( 'table tbody .row-actions .vh-wp-show-id' ),
+  var VHClipboard = new ClipboardJS( '.vh-wp-show-id.vh-has-copy' ),
     successTimeout;
 
   // Copy the id on click.

@@ -344,8 +344,10 @@ final class VH_WP_Show_Ids {
 		// Set up localisation.
 		$this->load_plugin_textdomain();
 
-		// Enqueue scripts and styles.
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		if ( apply_filters( 'vh_wp_show_ids_enable_copy', true ) === true ) {
+			// Enqueue scripts and styles.
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		}
 
 		// Hook the action with admin init.
 		add_action( 'admin_init', array( $this, 'add_ids_to_row_actions' ) );
@@ -367,6 +369,8 @@ final class VH_WP_Show_Ids {
 	 * @since 1.0.0
 	 */
 	public function enqueue_scripts_and_styles() {
+		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 		// Register admin styles.
 		wp_enqueue_style( 'vh-wp-show-ids-admin', $this->plugin_url() . '/assets/css/admin' . $suffix . '.css', array(), VH_WP_SHOW_IDS_VERSION );
 
@@ -380,30 +384,60 @@ final class VH_WP_Show_Ids {
 	 * @since 1.0.0
 	 */
 	public function add_ids_to_row_actions() {
-		add_filter( 'post_row_actions', array( __CLASS__, 'show_post_id' ), 99, 2 );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_posts', true ) === true ) {
+			// Show ids in posts.
+			add_filter( 'post_row_actions', array( __CLASS__, 'show_post_id' ), 99, 2 );
+		}
 
-		add_filter( 'page_row_actions', array( __CLASS__, 'show_post_id' ), 99, 2 );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_pages', true ) === true ) {
+			// Show ids in pages.
+			add_filter( 'page_row_actions', array( __CLASS__, 'show_post_id' ), 99, 2 );
+		}
 
-		add_filter( 'cat_row_actions', array( __CLASS__, 'show_term_id' ), 99, 2 );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_medias', true ) === true ) {
+			// Show ids in media.
+			add_filter( 'media_row_actions', array( __CLASS__, 'show_media_id' ), 99, 2 );
+		}
 
-		add_filter( 'tag_row_actions', array( __CLASS__, 'show_term_id' ), 99, 2 );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_terms', true ) === true ) {
+			// Show ids in tags.
+			add_filter( 'tag_row_actions', array( __CLASS__, 'show_term_id' ), 99, 2 );
+		}
 
-		add_filter( 'comment_row_actions', array( __CLASS__, 'show_comment_id' ), 99, 2 );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_comments', true ) === true ) {
+			// Show ids in comments.
+			add_filter( 'comment_row_actions', array( __CLASS__, 'show_comment_id' ), 99, 2 );
+		}
 
-		add_filter( 'media_row_actions', array( __CLASS__, 'show_post_id' ), 99, 2 );
-
-		add_filter( 'user_row_actions', array( __CLASS__, 'show_user_id' ), 99, 2 );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_users', true ) === true ) {
+			// Show ids in users.
+			add_filter( 'user_row_actions', array( __CLASS__, 'show_user_id' ), 99, 2 );
+		}
 	}
 
 	/**
-	 * Display ID is posts, pages, media lists and custom post types.
+	 * Display ID is posts, and custom post types.
 	 *
 	 * @param array   $actions Row actions.
 	 * @param WP_Post $post Post object.
 	 * @return array Modified row actions.
 	 */
 	public static function show_post_id( $actions, $post ) {
-		return self::prepend_to_row_actions( $actions, $post->ID );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_post_' . $post->post_type, true ) === true ) {
+			return self::prepend_to_row_actions( $actions, $post->ID );
+		}
+		return $actions;
+	}
+
+	/**
+	 * Display ID is media lists.
+	 *
+	 * @param array   $actions Row actions.
+	 * @param WP_Post $media Media post object.
+	 * @return array Modified row actions.
+	 */
+	public static function show_media_id( $actions, $media ) {
+		return self::prepend_to_row_actions( $actions, $media->ID );
 	}
 
 	/**
@@ -414,7 +448,10 @@ final class VH_WP_Show_Ids {
 	 * @return array Modified row actions.
 	 */
 	public static function show_term_id( $actions, $term ) {
-		return self::prepend_to_row_actions( $actions, $term->term_id );
+		if ( apply_filters( 'vh_wp_show_ids_enable_for_taxonomy_' . $term->taxonomy, true ) === true ) {
+			return self::prepend_to_row_actions( $actions, $term->term_id );
+		}
+		return $actions;
 	}
 
 	/**
@@ -464,11 +501,15 @@ final class VH_WP_Show_Ids {
 					esc_html( $id )
 				);
 
+				$classes   = array( 'vh-wp-show-id' );
+				$classes[] = apply_filters( 'vh_wp_show_ids_enable_copy', true ) ? 'vh-has-copy' : '';
+				$classes   = array_filter( $classes );
+
 				// Prepare the action array.
 				$id_action = array(
 					'id' => sprintf(
 						/* translators: 1: Object ID. 2: Object ID*/
-						'<span class="vh-wp-show-id" data-clipboard-text="%1$s" aria-label="' . esc_attr__( 'Click to copy', 'vh-wp-show-ids' ) . '" data-success-text="' . esc_attr__( 'Copied!', 'vh-wp-show-ids' ) . '">%2$s</span>',
+						'<span class="' . esc_attr( join( ' ', $classes ) ) . '" data-clipboard-text="%1$s" aria-label="' . esc_attr__( 'Click to copy', 'vh-wp-show-ids' ) . '" data-success-text="' . esc_attr__( 'Copied!', 'vh-wp-show-ids' ) . '">%2$s</span>',
 						esc_attr( $id ),
 						esc_html( $id_text ),
 					),
