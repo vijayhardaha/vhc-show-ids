@@ -1,12 +1,12 @@
 {
-  "name": "vh-wp-show-ids",
+  "name": "wp-show-ids",
   "description": "This plugin shows IDs on all post, page, media list, user and taxonomy pages.",
   "main": "gulpfile.js",
   "authors": [
     "Vijay Hardaha <https://twitter.com/vijayhardaha>"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/vijayhardaha/vh-wp-show-ids",
+  "homepage": "https://github.com/vijayhardaha/wp-show-ids",
   "private": true,
   "ignore": [
     "**/.*",

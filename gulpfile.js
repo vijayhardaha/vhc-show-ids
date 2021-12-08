@@ -2,9 +2,9 @@
 
 // Used on Pot Build.
 const pluginInfo = {
-  name: "VH WP Show IDs",
+  name: "WordPress Show IDs",
   version: "1.0.0",
-  domain: "vh-wp-show-ids",
+  domain: "wp-show-ids",
 };
 
 // See https://github.com/austinpray/asset-builder
