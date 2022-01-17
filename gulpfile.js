@@ -4,7 +4,7 @@
 const pluginInfo = {
   name: "WordPress Show IDs",
   version: "1.0.0",
-  domain: "wp-show-ids",
+  domain: "vhc-show-ids",
 };
 
 // See https://github.com/austinpray/asset-builder
