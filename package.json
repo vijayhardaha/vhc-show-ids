@@ -1,5 +1,6 @@
 {
   "name": "vhc-show-ids",
+  "pluginName": "VHC Show IDs",
   "version": "1.0.0",
   "description": "Shows IDs on all post, page, media list, user and taxonomy pages.",
   "main": "gulpfile.js",

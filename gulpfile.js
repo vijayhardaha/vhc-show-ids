@@ -1,11 +1,5 @@
-"use strict";
-
-// Used on Pot Build.
-const pluginInfo = {
-  name: "WordPress Show IDs",
-  version: "1.0.0",
-  domain: "vhc-show-ids",
-};
+// Package json.
+const pkg = require( "./package.json" );
 
 // See https://github.com/austinpray/asset-builder
 const manifest = require( "asset-builder" )( "./src/manifest.json" );
@@ -144,7 +138,7 @@ function lintJS ( done ) {
   gulp.src( files )
     .pipe(
       jshint( {
-        esversion: 5,
+        esversion: 6,
       } )
     )
     .pipe( jshint.reporter( "default" ) );
@@ -191,9 +185,9 @@ function clean ( done ) {
 // ### Make Pot
 function makePot ( done ) {
   wpPot( {
-    destFile: `./languages/${pluginInfo.domain}.pot`,
-    domain: pluginInfo.domain,
-    package: `${pluginInfo.name} ${pluginInfo.version}`,
+    destFile: `./languages/${pkg.name}.pot`,
+    domain: pkg.name,
+    package: `${pkg.pluginName} ${pkg.version}`,
     src: "**/*.php",
   } );
 
@@ -209,8 +203,6 @@ function makePot ( done ) {
 function watch ( done ) {
   gulp.watch( [ path.source + "css/**/*" ], gulp.parallel( buildCSS ) );
   gulp.watch( [ path.source + "js/**/*" ], gulp.parallel( lintJS, buildJS ) );
-  gulp.watch( [ path.source + "images/**/*" ], buildImages );
-  gulp.watch( [ path.source + "fonts/**/*" ], buildFonts );
 
   done();
 }
