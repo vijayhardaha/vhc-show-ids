@@ -32,15 +32,4 @@ if ( ! class_exists( 'VHC_Show_Ids', false ) ) {
 	include_once dirname( __FILE__ ) . '/includes/class-vhc-show-ids.php';
 }
 
-/**
- * Returns the main instance of VHC_Show_Ids.
- *
- * @since  1.0.0
- * @return VHC_Show_Ids
- */
-function vhc_show_ids() {
-	return VHC_Show_Ids::instance();
-}
-
-// Global for backwards compatibility.
-$GLOBALS['vhc_show_ids'] = vhc_show_ids();
+new VHC_Show_Ids();

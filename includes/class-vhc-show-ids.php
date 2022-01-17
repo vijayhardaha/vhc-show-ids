@@ -14,15 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @class VHC_Show_Ids
  */
-final class VHC_Show_Ids {
-	/**
-	 * This class instance.
-	 *
-	 * @var VHC_Show_Ids single instance of this class.
-	 * @since 1.0.0
-	 */
-	private static $instance;
-
+class VHC_Show_Ids {
 	/**
 	 * Admin notices to add.
 	 *
@@ -30,21 +22,6 @@ final class VHC_Show_Ids {
 	 * @since 1.0.0
 	 */
 	private $notices = array();
-
-	/**
-	 * Main VHC_Show_Ids Instance.
-	 *
-	 * Ensures only one instance of VHC_Show_Ids is loaded or can be loaded.
-	 *
-	 * @since 1.0.0
-	 * @return VHC_Show_Ids - Main instance.
-	 */
-	public static function instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 	/**
 	 * VHC_Show_Ids Constructor.
@@ -273,7 +250,7 @@ final class VHC_Show_Ids {
 					)
 				);
 				?>
-					</p>
+				</p>
 			</div>
 			<?php
 		}
@@ -426,6 +403,7 @@ final class VHC_Show_Ids {
 		if ( apply_filters( 'vhc_show_ids_enable_for_post_' . $post->post_type, true ) === true ) {
 			return self::prepend_to_row_actions( $actions, $post->ID );
 		}
+
 		return $actions;
 	}
 
@@ -501,8 +479,8 @@ final class VHC_Show_Ids {
 					esc_html( $id )
 				);
 
-				$classes   = array( 'wp-show-id' );
-				$classes[] = apply_filters( 'vhc_show_ids_enable_copy', true ) ? 'vh-has-copy' : '';
+				$classes   = array( 'vhc-column-id' );
+				$classes[] = apply_filters( 'vhc_show_ids_enable_copy', true ) ? 'vhc-has-copy' : '';
 				$classes   = array_filter( $classes );
 
 				// Prepare the action array.

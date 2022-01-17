@@ -1,5 +1,5 @@
 /**
- *  WP Show IDs
+ * VHC Show IDs
  * 
  * @version 1.0.0
  * @author Vijay Hardaha
@@ -7,9 +7,8 @@
  */
 
 /* global ClipboardJS */
-
 jQuery( function ( $ ) {
-  var VHClipboard = new ClipboardJS( '.wp-show-id.vh-has-copy' ),
+  var VHClipboard = new ClipboardJS( '.vhc-column-id.vhc-has-copy' ),
     successTimeout;
 
   // Copy the id on click.
